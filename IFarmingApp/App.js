@@ -1,7 +1,7 @@
 import RootNavigator from './src/Navigator/RootNavigation';
 import { StatusBar } from 'react-native';
-import StoreProvider from './src/Redux/Store';
-import store from './src/Redux/Store';
+import StoreProvider from './src/Store/Store';
+import store from './src/Store/Store';
 import { Provider } from 'react-redux';
 
 
