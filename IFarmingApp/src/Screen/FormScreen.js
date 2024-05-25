@@ -15,8 +15,8 @@ const FormScreen = () => {
 
   const handleSaveForm = useCallback((formId) => {
     dispatch(saveForm(formId));
-    navigation.navigate('SavedForm', { formId });
-  }, [dispatch, navigation]);
+  
+  }, [dispatch]);
 
   const handleCreateForm = useCallback(() => {
     if (formName.trim() !== '') {
@@ -25,6 +25,7 @@ const FormScreen = () => {
     }
     console.log(setFormName)
   }, [dispatch, formName]);
+
   const handleRemoveForm = (formId) => {
     dispatch(removeForm(formId));
   };
@@ -57,9 +58,11 @@ const FormScreen = () => {
             />
             <Button title="Guardar Formulario" onPress={() => handleSaveForm(item.id)} />
             <Button title="Eliminar Formulario" onPress={() => handleRemoveForm(item.id)} color="red" />
+            
           </View>
         )}
       />
+     
     </View>
   );
 };

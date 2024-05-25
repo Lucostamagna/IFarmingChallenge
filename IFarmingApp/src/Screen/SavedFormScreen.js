@@ -1,30 +1,25 @@
 // SavedFormScreen.js
 import React from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, Text, FlatList, Button } from 'react-native';
 import { useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 
-const SavedFormScreen = ({ route }) => {
-  const { formId } = route.params;
-  const savedForm = useSelector(state => state.form.savedForms[formId]);
-
-  if (!savedForm) {
-    return (
-      <View>
-        <Text>Formulario no encontrado</Text>
-      </View>
-    );
-  }
+const SavedFormsScreen = () => {
+  const savedForms = useSelector(state => state.form.savedForms);
+  const navigation = useNavigation();
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.formName}>{savedForm.name}</Text>
+    <View>
       <FlatList
-        data={savedForm.fields}
+        data={Object.values(savedForms)}
         keyExtractor={item => item.id.toString()}
         renderItem={({ item }) => (
-          <View style={styles.fieldContainer}>
-            <Text style={styles.fieldName}>{item.name}</Text>
-            <Text style={styles.fieldValue}>{item.value}</Text>
+          <View>
+            <Text>{item.name}</Text>
+            <Button
+              title="Ver Detalles"
+              onPress={() => navigation.navigate('FormDetails', { formId: item.id })}
+            />
           </View>
         )}
       />
@@ -32,25 +27,4 @@ const SavedFormScreen = ({ route }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    padding: 10,
-  },
-  formName: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  fieldContainer: {
-    marginBottom: 10,
-  },
-  fieldName: {
-    fontSize: 16,
-  },
-  fieldValue: {
-    fontSize: 14,
-    color: 'gray',
-  },
-});
-
-export default SavedFormScreen;
+export default SavedFormsScreen;
