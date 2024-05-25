@@ -1,4 +1,4 @@
-import { ADD_FORM,ADD_FIELD, REMOVE_FIELD, REMOVE_FORM, UPDATE_FIELD} from "../Actions/formActions";
+import { ADD_FORM,ADD_FIELD, REMOVE_FIELD, REMOVE_FORM, UPDATE_FIELD, SAVE_FORM} from "../Actions/formActions";
 
 
 const initialState = {
@@ -7,6 +7,16 @@ const initialState = {
 
   const formReducer = (state = initialState, action) => {
     switch (action.type) {
+      case SAVE_FORM:
+        const formId = action.payload;
+        const formToSave = state.forms.find(form => form.id === formId);
+        return {
+          ...state,
+          savedForms: {
+            ...state.savedForms,
+            [formId]: formToSave,
+          },
+        };
       case ADD_FORM:
         return {
           ...state,
@@ -42,6 +52,7 @@ const initialState = {
             } : form
           )
         };
+       
       default:
         return state;
     }

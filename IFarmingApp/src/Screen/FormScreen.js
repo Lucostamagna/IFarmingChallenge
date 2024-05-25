@@ -20,8 +20,8 @@ const FormScreen = () => {
   };
   const handleCreateForm = () => {
     if (formName.trim() !== '') {
-      dispatch(addForm(formName)); // Envía el nombre del formulario como argumento a la acción addForm
-      setFormName(''); // Limpia el campo de entrada después de crear el formulario
+      dispatch(addForm(formName)); 
+      setFormName('');
     }
   };
 

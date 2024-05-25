@@ -3,6 +3,7 @@ export const REMOVE_FORM = 'REMOVE_FORM';
 export const ADD_FIELD = 'ADD_FIELD';
 export const REMOVE_FIELD = 'REMOVE_FIELD';
 export const UPDATE_FIELD = 'UPDATE_FIELD';
+export const SAVE_FORM='SAVE_FORM';
 
 export const addForm = (name) => ({
   type: ADD_FORM,
@@ -23,6 +24,12 @@ export const removeField = (formId, fieldId) => ({
   type: REMOVE_FIELD,
   payload: { formId, fieldId }
 });
+export const saveForm = (formId) => {
+  return {
+    type: SAVE_FORM,
+    payload: formId,
+  };
+};
 
 export const updateField = (formId, fieldId, field) => ({
   type: UPDATE_FIELD,
