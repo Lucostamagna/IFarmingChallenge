@@ -1,10 +1,8 @@
-import React, {useState} from 'react';
+import React, { useState, useCallback } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { View, Button,Text, FlatList,TextInput,StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, TextInput, StyleSheet, TouchableOpacity, Button } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-
-import { addField,addForm,removeField,updateField, saveForm } from '../Redux/Actions/formActions';
-
+import { addField, addForm, removeField, updateField, saveForm } from '../Redux/Actions/formActions';
 import { useNavigation } from '@react-navigation/native';
 import Form from '../Components/Form';
 
@@ -14,81 +12,92 @@ const FormScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const handleSaveForm = (formId) => {
+  const handleSaveForm = useCallback((formId) => {
     dispatch(saveForm(formId));
     navigation.navigate('SavedForm', { formId });
-  };
-  const handleCreateForm = () => {
+  }, [dispatch, navigation]);
+
+  const handleCreateForm = useCallback(() => {
     if (formName.trim() !== '') {
-      dispatch(addForm(formName)); 
+      dispatch(addForm(formName));
       setFormName('');
     }
-  };
+  }, [dispatch, formName]);
+
+  const renderItem = useCallback(({ item }) => (
+    <View>
+      <Form
+        form={item}
+        addField={(formId, field) => dispatch(addField(formId, field))}
+        removeField={(formId, fieldId) => dispatch(removeField(formId, fieldId))}
+        updateField={(formId, fieldId, field) => dispatch(updateField(formId, fieldId, field))}
+      />
+      <Button title="Guardar Formulario" onPress={() => handleSaveForm(item.id)} />
+    </View>
+  ), [dispatch, handleSaveForm]);
 
   return (
-    <View>
-     <View style={styles.container}>
+    <View style={styles.screen}>
+      <View style={styles.container}>
         <TextInput
-        value={formName}
-        onChangeText={setFormName}
-        placeholder="Nombre del formulario"
-      />
-     
-      <TouchableOpacity  style={styles.button} onPress={handleCreateForm}>
-        <Text style={styles.buttonText}> Crear</Text>
-        <Icon name="arrow-forward" size={20} color="#fff" style={styles.icon} />
-      
-      </TouchableOpacity>
+          value={formName}
+          onChangeText={setFormName}
+          placeholder="Nombre del formulario"
+          style={styles.input}
+        />
+        <TouchableOpacity style={styles.button} onPress={handleCreateForm}>
+          <Text style={styles.buttonText}>Crear</Text>
+          <Icon name="arrow-forward" size={20} color="#fff" style={styles.icon} />
+        </TouchableOpacity>
       </View>
       <FlatList
         data={forms}
         keyExtractor={item => item.id.toString()}
-        renderItem={({ item }) => (
-          <View>
-            <Form
-              form={item}
-              addField={(formId, field) => dispatch(addField(formId, field))}
-              removeField={(formId, fieldId) => dispatch(removeField(formId, fieldId))}
-              updateField={(formId, fieldId, field) => dispatch(updateField(formId, fieldId, field))}
-            />
-            <Button title="Guardar Formulario" onPress={() => handleSaveForm(item.id)} />
-          </View>
-        )}
+        renderItem={renderItem}
       />
     </View>
   );
 };
-const styles = StyleSheet.create({
-container:{
-  borderWidth:2,
-  borderColor:'blue',
-  borderRadius:10,
-  backgroundColor:'white',
-  marginTop:'10%',
-  width:'80%',
-  height:'30%',
-  justifyContent:'center',
-  alignItems:'center',
-  marginHorizontal:'10%',
-  
- 
 
-},
-button: {
-  alignItems: 'center',
-  justifyContent: 'center',
-  borderRadius: 10,
- width:80,
- flexDirection: 'row',
-},
-buttonText: {
- 
-  fontSize: 18,
-  fontWeight: 'bold',
-},
-icon: {
-  marginLeft: 10,
-  color:'black'
-},
-})
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    padding: 10,
+  },
+  container: {
+    borderWidth: 2,
+    borderColor: 'blue',
+    borderRadius: 10,
+    backgroundColor: 'white',
+    marginTop: '10%',
+    padding: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  input: {
+    width: '100%',
+    padding: 10,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+  button: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    padding: 10,
+    backgroundColor: 'blue',
+  },
+  buttonText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#fff',
+  },
+  icon: {
+    marginLeft: 10,
+  },
+});
+
 export default FormScreen;

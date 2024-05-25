@@ -1,0 +1,8 @@
+export const ActionTypes = {
+    ADD_FORM: "ADD_FORM",
+    REMOVE_FORM: "REMOVE_FORM",
+    ADD_FIELD: "ADD_FIELD",
+    REMOVE_FIELD: "REMOVE_FIELD",
+    UPDATE_FIELD: "UPDATE_FIELD",
+    SAVE_FORM: "SAVE_FORM",
+  };
