@@ -1,5 +1,6 @@
-import React from 'react';
-import { View, Button, FlatList } from 'react-native';
+import React, {useState} from 'react';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { View, Button,Text, FlatList,TextInput,StyleSheet, TouchableOpacity } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { addField,addForm,removeField,updateField, saveForm } from '../Redux/Actions/formActions';
@@ -8,6 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import Form from '../Components/Form';
 
 const FormScreen = () => {
+  const [formName, setFormName] = useState('');
   const forms = useSelector(state => state.form.forms);
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -16,10 +18,28 @@ const FormScreen = () => {
     dispatch(saveForm(formId));
     navigation.navigate('SavedForm', { formId });
   };
+  const handleCreateForm = () => {
+    if (formName.trim() !== '') {
+      dispatch(addForm(formName)); // Envía el nombre del formulario como argumento a la acción addForm
+      setFormName(''); // Limpia el campo de entrada después de crear el formulario
+    }
+  };
 
   return (
     <View>
-      <Button title="Crear Formulario" onPress={() => dispatch(addForm('Nuevo Formulario'))} />
+     <View style={styles.container}>
+        <TextInput
+        value={formName}
+        onChangeText={setFormName}
+        placeholder="Nombre del formulario"
+      />
+     
+      <TouchableOpacity  style={styles.button} onPress={handleCreateForm}>
+        <Text style={styles.buttonText}> Crear</Text>
+        <Icon name="arrow-forward" size={20} color="#fff" style={styles.icon} />
+      
+      </TouchableOpacity>
+      </View>
       <FlatList
         data={forms}
         keyExtractor={item => item.id.toString()}
@@ -38,5 +58,37 @@ const FormScreen = () => {
     </View>
   );
 };
+const styles = StyleSheet.create({
+container:{
+  borderWidth:2,
+  borderColor:'blue',
+  borderRadius:10,
+  backgroundColor:'white',
+  marginTop:'10%',
+  width:'80%',
+  height:'30%',
+  justifyContent:'center',
+  alignItems:'center',
+  marginHorizontal:'10%',
+  
+ 
 
+},
+button: {
+  alignItems: 'center',
+  justifyContent: 'center',
+  borderRadius: 10,
+ width:80,
+ flexDirection: 'row',
+},
+buttonText: {
+ 
+  fontSize: 18,
+  fontWeight: 'bold',
+},
+icon: {
+  marginLeft: 10,
+  color:'black'
+},
+})
 export default FormScreen;
