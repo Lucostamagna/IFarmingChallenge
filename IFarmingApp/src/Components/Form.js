@@ -1,10 +1,15 @@
 import React from "react";
-import { View, TextInput, Button } from "react-native";
+import { View, TextInput, Button,StyleSheet } from "react-native";
 import FormSelector from "./FieldSelector";
 
 const Form = ({ form, addField, removeField, updateField }) => (
-  <View>
-    <TextInput placeholder="Nombre del Formulario" value={form.name} />
+  <View style={styles.formContainer}>
+  <TextInput
+    style={styles.formNameInput}
+    placeholder="Nombre del Formulario"
+    value={form.name}
+    editable={false} 
+  />
     {form.fields.map((field) => (
       <FormSelector
         key={field.id}
@@ -23,5 +28,21 @@ const Form = ({ form, addField, removeField, updateField }) => (
     />
   </View>
 );
-
+const styles = StyleSheet.create({
+  formContainer: {
+    margin: 10,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 5,
+    backgroundColor: "#fff",
+  },
+  formNameInput: {
+    padding: 10,
+    marginBottom: 15,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 5,
+  },
+});
 export default Form;

@@ -2,13 +2,14 @@ import React, { useState, useCallback } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { View, Text, FlatList, TextInput, StyleSheet, TouchableOpacity, Button } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { addField, addForm, removeField, updateField, saveForm } from '../Redux/Actions/formActions';
+import { addField, addForm, removeField, updateField, saveForm,removeForm } from '../Redux/Actions/formActions';
 import { useNavigation } from '@react-navigation/native';
 import Form from '../Components/Form';
 
 const FormScreen = () => {
   const [formName, setFormName] = useState('');
   const forms = useSelector(state => state.form.forms);
+
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
@@ -22,22 +23,15 @@ const FormScreen = () => {
       dispatch(addForm(formName));
       setFormName('');
     }
+    console.log(setFormName)
   }, [dispatch, formName]);
+  const handleRemoveForm = (formId) => {
+    dispatch(removeForm(formId));
+  };
 
-  const renderItem = useCallback(({ item }) => (
-    <View>
-      <Form
-        form={item}
-        addField={(formId, field) => dispatch(addField(formId, field))}
-        removeField={(formId, fieldId) => dispatch(removeField(formId, fieldId))}
-        updateField={(formId, fieldId, field) => dispatch(updateField(formId, fieldId, field))}
-      />
-      <Button title="Guardar Formulario" onPress={() => handleSaveForm(item.id)} />
-    </View>
-  ), [dispatch, handleSaveForm]);
 
   return (
-    <View style={styles.screen}>
+    <View>
       <View style={styles.container}>
         <TextInput
           value={formName}
@@ -53,7 +47,18 @@ const FormScreen = () => {
       <FlatList
         data={forms}
         keyExtractor={item => item.id.toString()}
-        renderItem={renderItem}
+        renderItem={({ item }) => (
+          <View>
+            <Form
+              form={item}
+              addField={(formId, field) => dispatch(addField(formId, field))}
+              removeField={(formId, fieldId) => dispatch(removeField(formId, fieldId))}
+              updateField={(formId, fieldId, field) => dispatch(updateField(formId, fieldId, field))}
+            />
+            <Button title="Guardar Formulario" onPress={() => handleSaveForm(item.id)} />
+            <Button title="Eliminar Formulario" onPress={() => handleRemoveForm(item.id)} color="red" />
+          </View>
+        )}
       />
     </View>
   );
