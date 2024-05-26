@@ -1,8 +1,8 @@
 import React from "react";
-import { View, Text, FlatList, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 
-const FormDetails = ({ route }) => {
+const FormDetailsScreen = ({ route }) => {
   const { formId } = route.params;
   const form = useSelector((state) => state.form.savedForms[formId]);
 
@@ -16,20 +16,18 @@ const FormDetails = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.formName}>{form.name}</Text>
-      <FlatList
-        data={form.fields}
-        keyExtractor={(field) => field.id.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.fieldContainer}>
-            <Text style={styles.fieldLabel}>{item.name}:</Text>
-            <Text style={styles.fieldValue}>Valor: {item.value}</Text>
-            <Text style={styles.fieldPlaceholder}>
-              Placeholder: {item.placeholder}
-            </Text>
+      <View style={styles.form}>
+      <Text style={styles.formName}>Deatlles del formulario:{form.name}</Text>
+      <View style={styles.fieldsContainer}>
+        {form.fields.map((field, index) => (
+          <View key={index} style={styles.fieldContainer}>
+            <Text style={styles.fieldLabel}>{field.name}:</Text>
+            <Text style={styles.fieldValue}>Valor: {field.value}</Text>
           </View>
-        )}
-      />
+        ))}
+      </View>
+      </View>
+     
     </View>
   );
 };
@@ -37,12 +35,25 @@ const FormDetails = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    backgroundColor: "#fff",
+    padding: 20,
+  },
+  form:{
+    marginBottom: 20, 
+    borderRadius: 10,
+    backgroundColor: 'white',
+    padding: 15,
+    
+    borderWidth: 2,
+    borderColor: "#6495ed",
   },
   formName: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 16,
+  },
+  fieldsContainer: {
+    marginTop: 10,
   },
   fieldContainer: {
     marginBottom: 8,
@@ -50,12 +61,7 @@ const styles = StyleSheet.create({
   fieldLabel: {
     fontWeight: "bold",
   },
-  fieldValue: {
-    marginBottom: 4,
-  },
-  fieldPlaceholder: {
-    color: "gray",
-  },
+  fieldValue: {},
 });
 
-export default FormDetails;
+export default FormDetailsScreen;

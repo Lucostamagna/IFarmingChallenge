@@ -38,6 +38,7 @@ const Form = ({ form, addField, removeField, updateField }) => (
     </TouchableOpacity>
   </View>
 );
+
 const styles = StyleSheet.create({
   formContainer: {
     margin: 10,

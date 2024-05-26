@@ -6,16 +6,13 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
-  Button,
   ScrollView,
+  Alert,
 } from "react-native";
 import {
   addField,
-  addForm,
   removeField,
   updateField,
-  saveForm,
-  removeForm,
 } from "../Redux/Actions/formActions";
 import { useSelector, useDispatch } from "react-redux";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -23,27 +20,18 @@ import Form from "../Components/Form";
 
 const FormScreen = () => {
   const [formName, setFormName] = useState("");
+  const { handleAddForm, handleRemoveForm, handleSaveForm } = useFormActions();
   const forms = useSelector((state) => state.form.forms);
   const dispatch = useDispatch();
 
-  const handleSaveForm = useCallback(
-    (formId) => {
-      dispatch(saveForm(formId));
-    },
-    [dispatch]
-  );
-
   const handleCreateForm = useCallback(() => {
     if (formName.trim() !== "") {
-      dispatch(addForm(formName));
+      handleAddForm(formName);
       setFormName("");
+    } else {
+      Alert.alert("Error", "Por favor, ingresa un nombre para el formulario.");
     }
-    console.log(setFormName);
-  }, [dispatch, formName]);
-
-  const handleRemoveForm = (formId) => {
-    dispatch(removeForm(formId));
-  };
+  }, [formName, handleAddForm]);
 
   return (
     <View style={styles.screen}>
@@ -95,7 +83,7 @@ const FormScreen = () => {
                   <Text style={styles.saveText}> Guardar Formulario</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  style={styles.buttonSave}
+                  style={styles.deleteText}
                   onPress={() => handleRemoveForm(item.id)}
                 >
                   <Text style={styles.saveText}> Eliminar formulario</Text>
@@ -134,7 +122,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   button: {
-
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -155,13 +142,24 @@ const styles = StyleSheet.create({
   },
   buttonSave: {
     width: "45%",
-height:50,
+    height: 50,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 10,
     padding: 5,
     borderWidth: 1,
-    borderColor: "blue",
+    borderColor: "green",
+    marginHorizontal: 2,
+  },
+  deleteText: {
+    width: "45%",
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 10,
+    padding: 5,
+    borderWidth: 1,
+    borderColor: "red",
     marginHorizontal: 2,
   },
   icon: {
