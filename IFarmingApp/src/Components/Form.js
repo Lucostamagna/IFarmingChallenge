@@ -1,15 +1,22 @@
 import React from "react";
-import { View, TextInput, Button,StyleSheet } from "react-native";
+import {
+  View,
+  TextInput,
+  Button,
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+} from "react-native";
 import FormSelector from "./FieldSelector";
 
 const Form = ({ form, addField, removeField, updateField }) => (
   <View style={styles.formContainer}>
-  <TextInput
-    style={styles.formNameInput}
-    placeholder="Nombre del Formulario"
-    value={form.name}
-    editable={false} 
-  />
+    <TextInput
+      style={styles.formNameInput}
+      placeholder="Nombre del Formulario"
+      value={form.name}
+      editable={false}
+    />
     {form.fields.map((field) => (
       <FormSelector
         key={field.id}
@@ -20,12 +27,15 @@ const Form = ({ form, addField, removeField, updateField }) => (
         removeField={() => removeField(form.id, field.id)}
       />
     ))}
-    <Button
-      title="Agregar Campo"
+
+    <TouchableOpacity
+      style={styles.buttonDelete}
       onPress={() =>
         addField(form.id, { name: "", placeholder: "", type: "text" })
       }
-    />
+    >
+      <Text style={styles.text}> AGREGAR CAMPOS </Text>
+    </TouchableOpacity>
   </View>
 );
 const styles = StyleSheet.create({
@@ -43,6 +53,21 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 5,
+  },
+  buttonDelete: {
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 10,
+    padding: 5,
+    borderWidth: 2,
+    borderColor: "white",
+    backgroundColor: "#bbd0f7",
+    marginHorizontal: 2,
+  },
+  text: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "white",
   },
 });
 export default Form;

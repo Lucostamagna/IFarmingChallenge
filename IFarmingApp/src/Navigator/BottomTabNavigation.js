@@ -1,31 +1,23 @@
-import React, { useEffect, useState } from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native";
+import React from "react";
+import { StyleSheet } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import FormScreen from "../Screen/FormScreen";
 import SavedFormsScreen from "../Screen/SavedFormScreen";
 
-
 const Tab = createBottomTabNavigator();
 
-export default function MyTabs({ focused }) {
+export default function MyTabs() {
   return (
     <Tab.Navigator
       screenOptions={{
         tabBarStyle: {
-          height: 65,
+          height: 60,
           left: 0,
           right: 0,
-          backgroundColor: "#f35999",
-
+          backgroundColor: "#bbd0f7",
+          position: "absolute",
           borderTopWidth: 2,
           paddingTop: 8,
           borderTopLeftRadius: 15,
@@ -43,10 +35,10 @@ export default function MyTabs({ focused }) {
         component={FormScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color, focused }) => (
+          tabBarIcon: ({ focused }) => (
             <MaterialIcons
               name="home"
-              color={focused ? "white" : "#c30752"}
+              color={focused ? "blue" : "white"}
               size={35}
             />
           ),
@@ -58,16 +50,15 @@ export default function MyTabs({ focused }) {
         component={SavedFormsScreen}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color, focused }) => (
+          tabBarIcon: ({ focused }) => (
             <Entypo
               name="new-message"
               size={24}
-              color={focused ? "white" : "#c30752"}
+              color={focused ? "blue" : "white"}
             />
           ),
         }}
       />
-     
     </Tab.Navigator>
   );
 }

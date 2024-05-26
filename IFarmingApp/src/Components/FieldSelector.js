@@ -4,6 +4,7 @@ import {
   TextInput,
   Button,
   StyleSheet,
+  TouchableOpacity,
   Text,
   Switch,
 } from "react-native";
@@ -69,12 +70,12 @@ const FormSelector = ({ field, updateField, removeField }) => {
       </Picker>
 
       {renderInputField()}
-
-      <Button
-        title="Eliminar Campo"
-        color="#d9534f"
+      <TouchableOpacity
+        style={styles.buttonDelete}
         onPress={() => removeField(field.id)}
-      />
+      >
+        <Text style={styles.saveText}> Eliminar Campo</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -90,7 +91,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 5,
-    elevation: 3,
+    elevation: 2,
   },
   input: {
     height: 40,
@@ -113,6 +114,15 @@ const styles = StyleSheet.create({
   switchLabel: {
     marginRight: 10,
     fontSize: 16,
+  },
+  buttonDelete: {
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 10,
+    padding: 2,
+    borderWidth: 1,
+    borderColor: "blue",
+    marginHorizontal: 2,
   },
 });
 
