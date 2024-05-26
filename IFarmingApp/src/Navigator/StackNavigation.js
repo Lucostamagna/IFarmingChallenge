@@ -4,6 +4,7 @@ import FormScreen from "../Screen/FormScreen";
 import SavedFormScreen from "../Screen/SavedFormScreen";
 import MyTabs from "./BottomTabNavigation";
 import FormDetails from "../Screen/FormDetails";
+import CustomHeader from "../Components/CustomHeader";
 
 const Stack = createStackNavigator();
 
@@ -14,7 +15,9 @@ export default function MyStack() {
         name="Home"
         component={MyTabs}
         options={{
-          headerShown: false,
+          header: () => (
+            <CustomHeader title="Home" />
+          ),
         }}
       />
       <Stack.Screen

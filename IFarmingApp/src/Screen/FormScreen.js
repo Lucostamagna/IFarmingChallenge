@@ -11,8 +11,11 @@ import {
 } from "react-native";
 import {
   addField,
+  addForm,
   removeField,
   updateField,
+  saveForm,
+  removeForm,
 } from "../Redux/Actions/formActions";
 import { useSelector, useDispatch } from "react-redux";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -20,18 +23,52 @@ import Form from "../Components/Form";
 
 const FormScreen = () => {
   const [formName, setFormName] = useState("");
-  const { handleAddForm, handleRemoveForm, handleSaveForm } = useFormActions();
+
   const forms = useSelector((state) => state.form.forms);
   const dispatch = useDispatch();
 
+  const handleSaveForm = useCallback(
+    (formId) => {
+      dispatch(saveForm(formId));
+      setFormName("");
+      Alert.alert("Éxito", "Formulario guardado exitosamente.", [
+        {
+          text: "OK",
+          onPress: () => {
+            dispatch(removeForm(formId));
+          },
+        },
+      ]);
+    },
+    [dispatch]
+  );
   const handleCreateForm = useCallback(() => {
     if (formName.trim() !== "") {
-      handleAddForm(formName);
+      dispatch(addForm(formName));
       setFormName("");
     } else {
       Alert.alert("Error", "Por favor, ingresa un nombre para el formulario.");
     }
-  }, [formName, handleAddForm]);
+  }, [dispatch, formName]);
+
+  const handleRemoveForm = useCallback((formId) => {
+    Alert.alert(
+      "Eliminar formulario",
+      "¿Estás seguro de que deseas eliminar este formulario?",
+      [
+        {
+          text: "Cancelar",
+          style: "cancel"
+        },
+        {
+          text: "OK",
+          onPress: () => {
+            dispatch(removeForm(formId));
+          }
+        }
+      ]
+    );
+  }, [dispatch]);
 
   return (
     <View style={styles.screen}>
@@ -151,7 +188,7 @@ const styles = StyleSheet.create({
     borderColor: "green",
     marginHorizontal: 2,
   },
-  deleteText: {
+  deleteText:{
     width: "45%",
     height: 50,
     alignItems: "center",
