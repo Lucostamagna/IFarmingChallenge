@@ -8,11 +8,13 @@ import {
   StyleSheet,
   TouchableOpacity,
   Alert,
+  Platform,
+  Dimensions
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { removeForm } from "../Redux/Actions/formActions";
-
+const { width, height } = Dimensions.get('window');
 const SavedFormsScreen = () => {
   const savedForms = useSelector((state) => state.form.savedForms);
  
@@ -72,6 +74,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderWidth: 2,
     borderColor: "#6495ed",
+    ...Platform.select({
+      web: {
+        width: width > 1024 ? "50%" : width > 768 ? "60%" : "70%", 
+        marginTop: width > 1024 ? 50 : width > 768 ? 40 : 30,
+        marginHorizontal: width > 1024 ? "25%" : width > 768 ? "30%" : "15%",  
+      }
+    })
+  
   },
   formName: {
     fontSize: 16,

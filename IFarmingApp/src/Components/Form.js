@@ -6,9 +6,11 @@ import {
   StyleSheet,
   TouchableOpacity,
   Text,
+  Platform,
+  Dimensions
 } from "react-native";
 import FormSelector from "./FieldSelector";
-
+const { width, height } = Dimensions.get('window');
 const Form = ({ form, addField, removeField, updateField }) => (
   <View style={styles.formContainer}>
     <TextInput
@@ -47,6 +49,14 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     borderRadius: 5,
     backgroundColor: "#fff",
+    ...Platform.select({
+      web: {
+        width: width > 1024 ? "50%" : width > 768 ? "60%" : "70%", 
+        marginTop: width > 1024 ? 50 : width > 768 ? 40 : 30,
+        marginHorizontal: width > 1024 ? "25%" : width > 768 ? "30%" : "15%",  
+      }
+    })
+  
   },
   formNameInput: {
     padding: 10,

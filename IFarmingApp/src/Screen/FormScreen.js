@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
+  Platform,
+  Dimensions
 } from "react-native";
 import {
   addField,
@@ -20,7 +22,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import Icon from "react-native-vector-icons/Ionicons";
 import Form from "../Components/Form";
-
+const { width, height } = Dimensions.get('window');
 const FormScreen = () => {
   const [formName, setFormName] = useState("");
 
@@ -149,6 +151,13 @@ const styles = StyleSheet.create({
     padding: 15,
     justifyContent: "center",
     alignItems: "center",
+    ...Platform.select({
+      web: {
+        width: width > 1024 ? "50%" : width > 768 ? "60%" : "70%", 
+        marginTop: width > 1024 ? 50 : width > 768 ? 40 : 30,
+        marginHorizontal: width > 1024 ? "25%" : width > 768 ? "30%" : "15%",  
+      }
+    })
   },
   input: {
     width: "100%",
@@ -187,6 +196,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "green",
     marginHorizontal: 2,
+    ...Platform.select({
+      web: {
+        width: width > 1024 ? "20%" : width > 768 ? "30%" : "25%", 
+        marginTop: width > 1024 ? 50 : width > 768 ? 40 : 30,
+      
+      }
+    })
+  
+  
   },
   deleteText:{
     width: "45%",
@@ -198,6 +216,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "red",
     marginHorizontal: 2,
+    ...Platform.select({
+      web: {
+        width: width > 1024 ? "20%" : width > 768 ? "30%" : "25%", 
+        marginTop: width > 1024 ? 50 : width > 768 ? 40 : 30,
+         
+      }
+    })
   },
   icon: {
     marginLeft: 10,
