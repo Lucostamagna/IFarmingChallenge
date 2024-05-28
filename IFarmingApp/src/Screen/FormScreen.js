@@ -24,7 +24,7 @@ import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import Form from "../Components/Form";
 
-const { width } = Dimensions.get("window");
+const { width,height } = Dimensions.get("window");
 
 const FormScreen = () => {
   const [formName, setFormName] = useState("");
@@ -157,9 +157,22 @@ const FormScreen = () => {
 
 const styles = StyleSheet.create({
   screen: {
-    flex: 1,
+    
+   
     padding: 10,
     backgroundColor: "#F0F8FF",
+    ...Platform.select({
+      ios: {
+        flex: 1,
+      },
+      android: {
+        flex: 1,
+      },
+      web: {
+        height: height > 1024 ? "80%" : width > 768 ? "60%" : "70%",
+     
+      },
+    }),
   },
   container: {
     borderWidth: 2,
@@ -251,6 +264,9 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "bold",
   },
+  scrollContent:{
+    flexGrow: 1,
+  }
 });
 
 export default FormScreen;
