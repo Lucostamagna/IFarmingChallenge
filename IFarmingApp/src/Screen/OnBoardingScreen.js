@@ -8,7 +8,7 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
-import Icon from 'react-native-vector-icons/Ionicons'
+import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 
 const { width: screenWidth } = Dimensions.get("window");
@@ -21,17 +21,15 @@ const OnBoardingScreen = () => {
       image: require("../../assets/formul.jpg"),
       title: "¿Qué es Form App?",
       description:
-        "Con From App podrás crear tus propios formularios de una manera MUY sencilla",
+        "Con From App podrás crear tus propios formularios de una manera MUY sencilla y práctica",
     },
     {
       id: "2",
       image: require("../../assets/formularioo.jpg"),
       title: "¿Cómo funciona?",
       description:
-        "Solo elige un nombre para tus formulario, los campos que necesites capturas, compartelo y LISTO.",
+        "Solo elige un nombre para tu formulario, los campos que necesites capturar, compartelo y LISTO.",
     },
-  
-   
   ];
 
   const renderItem = ({ item }) => (
@@ -44,10 +42,10 @@ const OnBoardingScreen = () => {
     </View>
   );
   const navigateToLogin = () => {
-    navigation.navigate('Login');
+    navigation.navigate("Home");
   };
   return (
-    <View>
+    <View style={styles.view}>
       <View style={styles.container}>
         <FlatList
           data={carouselItems}
@@ -62,11 +60,10 @@ const OnBoardingScreen = () => {
         />
       </View>
 
-      
       <TouchableOpacity onPress={navigateToLogin} style={styles.roundButton}>
         <Icon name="arrow-forward" size={24} color="black" />
       </TouchableOpacity>
-      </View>
+    </View>
   );
 };
 
@@ -75,11 +72,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop:screenWidth * 0.3,
-    marginLeft:22
+    marginTop: screenWidth * 0.3,
+    marginLeft: 22,
   },
-  gradient: {
+  view: {
     flex: 1,
+    backgroundColor: "white",
   },
   itemContainer: {
     marginTop: screenWidth * 0.2,
@@ -90,10 +88,9 @@ const styles = StyleSheet.create({
     padding: 20,
     justifyContent: "center",
     alignItems: "center",
-
   },
   itemTitle: {
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: "bold",
     color: "black",
     marginBottom: 20,
@@ -109,20 +106,20 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: "center",
     color: "black",
-    fontStyle: 'italic',
-    textAlign: 'justify'
+    fontStyle: "italic",
+    textAlign: "justify",
   },
   roundButton: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 30,
     right: 20,
     width: 65,
     height: 50,
     borderRadius: 25,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: '#000',
+    backgroundColor: "#6495ed",
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 2,
@@ -130,8 +127,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 18,
-    color: '#c30752',
-    fontWeight: 'bold',
+    color: "#c30752",
+    fontWeight: "bold",
   },
 });
 
