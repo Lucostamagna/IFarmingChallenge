@@ -13,7 +13,13 @@ export default function MyStack() {
   return (
     <Stack.Navigator>
       {Platform.OS !== "web" && (
-        <Stack.Screen name="OnBoardingScreen" component={OnBoardingScreen} />
+        <Stack.Screen
+          name="OnBoardingScreen"
+          component={OnBoardingScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
       )}
       {Platform.OS !== "web" && (
         <Stack.Screen
@@ -35,7 +41,7 @@ export default function MyStack() {
         name="SavedForm"
         component={SavedFormScreen}
         options={{
-          headerShown: false,
+          header: () => <CustomHeader title="Home" />,
         }}
       />
 

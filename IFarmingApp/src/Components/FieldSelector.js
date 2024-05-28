@@ -44,6 +44,16 @@ const FormSelector = ({ field, updateField, removeField }) => {
             />
           </View>
         );
+        case "multiple":
+          // Placeholder for multiple options. You can implement a modal or another picker for multiple selections.
+          return (
+            <TextInput
+              style={styles.input}
+              placeholder="Introduce opciones separadas por comas"
+              value={field.value}
+              onChangeText={(text) => updateField({ ...field, value: text })}
+            />
+          );
       default:
         return null;
     }
@@ -67,6 +77,7 @@ const FormSelector = ({ field, updateField, removeField }) => {
         <Picker.Item label="Número" value="number" />
         <Picker.Item label="Opción" value="option" />
         <Picker.Item label="Booleano" value="boolean" />
+        <Picker.Item label="Opción Múltiple" value="multiple" />
       </Picker>
 
       {renderInputField()}

@@ -1,59 +1,61 @@
-// SavedFormScreen.js
-import React from "react";
+import React, { useCallback } from "react";
 import {
   View,
   Text,
   FlatList,
-  Button,
   StyleSheet,
-  TouchableOpacity,
   Alert,
   Platform,
-  Dimensions
+  Dimensions,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
+
 import { removeForm } from "../Redux/Actions/formActions";
-const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get("window");
 const SavedFormsScreen = () => {
   const savedForms = useSelector((state) => state.form.savedForms);
- 
+
   const dispatch = useDispatch();
 
-  const handleRemoveForm = (formId) => {
-    dispatch(removeForm(formId));
-  };
-
-  const confirmDeleteForm = (formId) => {
-    Alert.alert(
-      "Eliminar formulario",
-      "¿Estás seguro de que deseas eliminar este formulario?",
-      [
-        { text: "Cancelar", style: "cancel" },
-        { text: "OK", onPress: () => handleRemoveForm(formId) },
-      ]
-    );
-  };
+  const handleRemoveForm = useCallback(
+    (formId) => {
+      Alert.alert(
+        "Eliminar formulario",
+        "¿Estás seguro de que deseas eliminar este formulario?",
+        [
+          {
+            text: "Cancelar",
+            style: "cancel",
+          },
+          {
+            text: "OK",
+            onPress: () => {
+              dispatch(removeForm(formId));
+            },
+          },
+        ]
+      );
+    },
+    [dispatch]
+  );
   return (
     <View style={styles.container}>
-      <FlatList
-        data={Object.values(savedForms)}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.formContainer}>
-            <Text style={styles.formName}>{item.name}</Text>
-            {/* <TouchableOpacity  style={styles.button} onPress={() => navigation.navigate('FormDetails', { formId: item.id })}>
-<Text style={styles.buttonText}> Ver Detalle </Text>
-            </TouchableOpacity> */}
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => confirmDeleteForm(item.id)}
-            >
-              <Text style={styles.buttonText}>Eliminar</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-      />
+      {Object.keys(savedForms).length > 0 ? (
+        <>
+          <Text style={styles.emptyText}>Formularios guardados.</Text>
+          <FlatList
+            data={Object.values(savedForms)}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <View style={styles.formContainer}>
+                <Text style={styles.formName}>{item.name}</Text>
+              </View>
+            )}
+          />
+        </>
+      ) : (
+        <Text style={styles.emptyText}>No hay formularios guardados.</Text>
+      )}
     </View>
   );
 };
@@ -76,12 +78,11 @@ const styles = StyleSheet.create({
     borderColor: "#6495ed",
     ...Platform.select({
       web: {
-        width: width > 1024 ? "50%" : width > 768 ? "60%" : "70%", 
+        width: width > 1024 ? "50%" : width > 768 ? "60%" : "70%",
         marginTop: width > 1024 ? 50 : width > 768 ? 40 : 30,
-        marginHorizontal: width > 1024 ? "25%" : width > 768 ? "30%" : "15%",  
-      }
-    })
-  
+        marginHorizontal: width > 1024 ? "25%" : width > 768 ? "30%" : "15%",
+      },
+    }),
   },
   formName: {
     fontSize: 16,
@@ -99,6 +100,13 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "bold",
     color: "#fff",
+  },
+  emptyText: {
+    textAlign: "center",
+    marginTop: 5,
+    marginBottom: 15,
+    fontSize: 18,
+    color: "#777",
   },
 });
 

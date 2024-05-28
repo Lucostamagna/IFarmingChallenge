@@ -9,7 +9,7 @@ import {
   ScrollView,
   Alert,
   Platform,
-  Dimensions
+  Dimensions,
 } from "react-native";
 import {
   addField,
@@ -20,14 +20,17 @@ import {
   removeForm,
 } from "../Redux/Actions/formActions";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import Form from "../Components/Form";
-const { width, height } = Dimensions.get('window');
+
+const { width, height } = Dimensions.get("window");
+
 const FormScreen = () => {
   const [formName, setFormName] = useState("");
-
   const forms = useSelector((state) => state.form.forms);
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const handleSaveForm = useCallback(
     (formId) => {
@@ -53,25 +56,31 @@ const FormScreen = () => {
     }
   }, [dispatch, formName]);
 
-  const handleRemoveForm = useCallback((formId) => {
-    Alert.alert(
-      "Eliminar formulario",
-      "¿Estás seguro de que deseas eliminar este formulario?",
-      [
-        {
-          text: "Cancelar",
-          style: "cancel"
-        },
-        {
-          text: "OK",
-          onPress: () => {
-            dispatch(removeForm(formId));
-          }
-        }
-      ]
-    );
-  }, [dispatch]);
+  const handleRemoveForm = useCallback(
+    (formId) => {
+      Alert.alert(
+        "Eliminar formulario",
+        "¿Estás seguro de que deseas eliminar este formulario?",
+        [
+          {
+            text: "Cancelar",
+            style: "cancel",
+          },
+          {
+            text: "OK",
+            onPress: () => {
+              dispatch(removeForm(formId));
+            },
+          },
+        ]
+      );
+    },
+    [dispatch]
+  );
 
+  const navigateToForm = () => {
+    navigation.navigate("SavedForm");
+  };
   return (
     <View style={styles.screen}>
       <View style={styles.container}>
@@ -132,6 +141,14 @@ const FormScreen = () => {
           )}
         />
       </ScrollView>
+      {Platform.OS === "web" && (
+        <TouchableOpacity onPress={navigateToForm} style={styles.roundButton}>
+          <View style={{ flexDirection: "row" }}>
+            <Text> Formularios guardados </Text>
+            <Icon name="arrow-forward" size={24} color="black" />
+          </View>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -153,11 +170,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     ...Platform.select({
       web: {
-        width: width > 1024 ? "50%" : width > 768 ? "60%" : "70%", 
+        width: width > 1024 ? "50%" : width > 768 ? "60%" : "70%",
         marginTop: width > 1024 ? 50 : width > 768 ? 40 : 30,
-        marginHorizontal: width > 1024 ? "25%" : width > 768 ? "30%" : "15%",  
-      }
-    })
+        marginHorizontal: width > 1024 ? "25%" : width > 768 ? "30%" : "15%",
+      },
+    }),
   },
   input: {
     width: "100%",
@@ -181,6 +198,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#fff",
   },
+  roundButton: {
+    position: "absolute",
+    bottom: 30,
+    right: 20,
+  },
   saveText: {
     fontSize: 14,
     fontWeight: "bold",
@@ -198,15 +220,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 2,
     ...Platform.select({
       web: {
-        width: width > 1024 ? "20%" : width > 768 ? "30%" : "25%", 
+        width: width > 1024 ? "20%" : width > 768 ? "30%" : "25%",
         marginTop: width > 1024 ? 50 : width > 768 ? 40 : 30,
-      
-      }
-    })
-  
-  
+      },
+    }),
   },
-  deleteText:{
+  deleteText: {
     width: "45%",
     height: 50,
     alignItems: "center",
@@ -218,11 +237,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 2,
     ...Platform.select({
       web: {
-        width: width > 1024 ? "20%" : width > 768 ? "30%" : "25%", 
+        width: width > 1024 ? "20%" : width > 768 ? "30%" : "25%",
         marginTop: width > 1024 ? 50 : width > 768 ? 40 : 30,
-         
-      }
-    })
+      },
+    }),
   },
   icon: {
     marginLeft: 10,
