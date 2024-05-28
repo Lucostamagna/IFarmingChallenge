@@ -13,6 +13,7 @@ import FormSelector from "./FieldSelector";
 const { width, height } = Dimensions.get('window');
 const Form = ({ form, addField, removeField, updateField }) => (
   <View style={styles.formContainer}>
+    
     <TextInput
       style={styles.formNameInput}
       placeholder="Nombre del Formulario"
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
     ...Platform.select({
       web: {
         width: width > 1024 ? "50%" : width > 768 ? "60%" : "70%", 
-        marginTop: width > 1024 ? 50 : width > 768 ? 40 : 30,
+        marginTop: width > 1024 ? 30 : width > 768 ? 40 : 30,
         marginHorizontal: width > 1024 ? "25%" : width > 768 ? "30%" : "15%",  
       }
     })

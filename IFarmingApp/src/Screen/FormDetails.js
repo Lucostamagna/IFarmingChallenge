@@ -17,7 +17,7 @@ const FormDetailsScreen = ({ route }) => {
   return (
     <View style={styles.container}>
       <View style={styles.form}>
-      <Text style={styles.formName}>Deatlles del formulario:{form.name}</Text>
+      <Text style={styles.formName}>Detalles del formulario:{form.name}</Text>
       <View style={styles.fieldsContainer}>
         {form.fields.map((field, index) => (
           <View key={index} style={styles.fieldContainer}>

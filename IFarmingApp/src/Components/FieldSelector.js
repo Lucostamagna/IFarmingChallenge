@@ -2,7 +2,6 @@ import React from "react";
 import {
   View,
   TextInput,
-  Button,
   StyleSheet,
   TouchableOpacity,
   Text,
@@ -45,7 +44,7 @@ const FormSelector = ({ field, updateField, removeField }) => {
           </View>
         );
         case "multiple":
-          // Placeholder for multiple options. You can implement a modal or another picker for multiple selections.
+      
           return (
             <TextInput
               style={styles.input}

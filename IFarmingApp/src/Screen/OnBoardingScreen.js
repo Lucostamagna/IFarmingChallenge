@@ -56,7 +56,7 @@ const OnBoardingScreen = () => {
           pagingEnabled
           snapToAlignment="center"
           decelerationRate="fast"
-          snapToInterval={screenWidth * 0.8}
+          snapToInterval={screenWidth * 0.5}
         />
       </View>
 
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: screenWidth * 0.3,
-    marginLeft: 22,
+    marginLeft:10,
   },
   view: {
     flex: 1,
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: screenWidth * 0.8,
     height: screenWidth * 0.8,
-    marginHorizontal: 9,
+    marginHorizontal: 5,
     padding: 20,
     justifyContent: "center",
     alignItems: "center",

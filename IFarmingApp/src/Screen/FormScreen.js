@@ -24,7 +24,7 @@ import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import Form from "../Components/Form";
 
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 
 const FormScreen = () => {
   const [formName, setFormName] = useState("");
@@ -83,24 +83,25 @@ const FormScreen = () => {
   };
   return (
     <View style={styles.screen}>
-      <View style={styles.container}>
-        <TextInput
-          value={formName}
-          onChangeText={setFormName}
-          placeholder="Nombre del formulario"
-          style={styles.input}
-        />
-        <TouchableOpacity style={styles.button} onPress={handleCreateForm}>
-          <Text style={styles.buttonText}>Crear</Text>
-          <Icon
-            name="arrow-forward"
-            size={20}
-            color="#fff"
-            style={styles.icon}
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <View style={styles.container}>
+          <TextInput
+            value={formName}
+            onChangeText={setFormName}
+            placeholder="Nombre del formulario"
+            style={styles.input}
           />
-        </TouchableOpacity>
-      </View>
-      <ScrollView>
+          <TouchableOpacity style={styles.button} onPress={handleCreateForm}>
+            <Text style={styles.buttonText}>Crear</Text>
+            <Icon
+              name="arrow-forward"
+              size={20}
+              color="#fff"
+              style={styles.icon}
+            />
+          </TouchableOpacity>
+        </View>
+
         <FlatList
           data={forms}
           keyExtractor={(item) => item.id.toString()}
@@ -140,15 +141,16 @@ const FormScreen = () => {
             </View>
           )}
         />
+
+        {Platform.OS === "web" && (
+          <TouchableOpacity onPress={navigateToForm} style={styles.roundButton}>
+            <View style={{ flexDirection: "row", marginBottom: 30 }}>
+              <Text style={styles.textForm}> Formularios guardados </Text>
+              <Icon name="arrow-forward" size={24} color="black" />
+            </View>
+          </TouchableOpacity>
+        )}
       </ScrollView>
-      {Platform.OS === "web" && (
-        <TouchableOpacity onPress={navigateToForm} style={styles.roundButton}>
-          <View style={{ flexDirection: "row" }}>
-            <Text> Formularios guardados </Text>
-            <Icon name="arrow-forward" size={24} color="black" />
-          </View>
-        </TouchableOpacity>
-      )}
     </View>
   );
 };
@@ -171,7 +173,7 @@ const styles = StyleSheet.create({
     ...Platform.select({
       web: {
         width: width > 1024 ? "50%" : width > 768 ? "60%" : "70%",
-        marginTop: width > 1024 ? 50 : width > 768 ? 40 : 30,
+        marginTop: width > 1024 ? 30 : width > 768 ? 40 : 30,
         marginHorizontal: width > 1024 ? "25%" : width > 768 ? "30%" : "15%",
       },
     }),
@@ -244,6 +246,10 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginLeft: 10,
+  },
+  textForm: {
+    fontSize: 15,
+    fontWeight: "bold",
   },
 });
 
