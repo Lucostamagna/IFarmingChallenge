@@ -43,16 +43,15 @@ const FormSelector = ({ field, updateField, removeField }) => {
             />
           </View>
         );
-        case "multiple":
-      
-          return (
-            <TextInput
-              style={styles.input}
-              placeholder="Introduce opciones separadas por comas"
-              value={field.value}
-              onChangeText={(text) => updateField({ ...field, value: text })}
-            />
-          );
+      case "multiple":
+        return (
+          <TextInput
+            style={styles.input}
+            placeholder="Introduce opciones separadas por comas"
+            value={field.value}
+            onChangeText={(text) => updateField({ ...field, value: text })}
+          />
+        );
       default:
         return null;
     }

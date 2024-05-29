@@ -28,7 +28,7 @@ const OnBoardingScreen = () => {
       image: require("../../assets/formularioo.jpg"),
       title: "¿Cómo funciona?",
       description:
-        "Solo elige un nombre para tu formulario, los campos que necesites capturar, compartelo y LISTO.",
+        "Solo elige un nombre para tu formulario, los campos que necesites capturar y LISTO.",
     },
   ];
 

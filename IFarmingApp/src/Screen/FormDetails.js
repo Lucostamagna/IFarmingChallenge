@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
-
+//PANTALLA AÚN NO FUNCIONAL
 const FormDetailsScreen = ({ route }) => {
   const { formId } = route.params;
   const form = useSelector((state) => state.form.savedForms[formId]);

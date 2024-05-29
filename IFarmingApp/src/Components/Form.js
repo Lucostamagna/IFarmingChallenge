@@ -10,10 +10,11 @@ import {
   Dimensions
 } from "react-native";
 import FormSelector from "./FieldSelector";
-const { width, height } = Dimensions.get('window');
+
+const { width} = Dimensions.get('window');
+
 const Form = ({ form, addField, removeField, updateField }) => (
   <View style={styles.formContainer}>
-    
     <TextInput
       style={styles.formNameInput}
       placeholder="Nombre del Formulario"

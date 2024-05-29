@@ -8,36 +8,35 @@ import {
   Platform,
   Dimensions,
 } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
-import { removeForm } from "../Redux/Actions/formActions";
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 const SavedFormsScreen = () => {
   const savedForms = useSelector((state) => state.form.savedForms);
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const handleRemoveForm = useCallback(
-    (formId) => {
-      Alert.alert(
-        "Eliminar formulario",
-        "¿Estás seguro de que deseas eliminar este formulario?",
-        [
-          {
-            text: "Cancelar",
-            style: "cancel",
-          },
-          {
-            text: "OK",
-            onPress: () => {
-              dispatch(removeForm(formId));
-            },
-          },
-        ]
-      );
-    },
-    [dispatch]
-  );
+  // const handleRemoveForm = useCallback(
+  //   (formId) => {
+  //     Alert.alert(
+  //       "Eliminar formulario",
+  //       "¿Estás seguro de que deseas eliminar este formulario?",
+  //       [
+  //         {
+  //           text: "Cancelar",
+  //           style: "cancel",
+  //         },
+  //         {
+  //           text: "OK",
+  //           onPress: () => {
+  //             dispatch(removeForm(formId));
+  //           },
+  //         },
+  //       ]
+  //     );
+  //   },
+  //   [dispatch]
+  // );
   return (
     <View style={styles.container}>
       {Object.keys(savedForms).length > 0 ? (
